@@ -3,12 +3,19 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 )
 
 func main() {
 	http.HandleFunc("/health", ping)
 	http.HandleFunc("/headers", headers)
-	http.ListenAndServe(":8090", nil)
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8090"
+	}
+
+	http.ListenAndServe(fmt.Sprintf(":%v", port), nil)
 }
 
 func ping(w http.ResponseWriter, req *http.Request) {

@@ -1,1 +1,0 @@
-web: infra/bin/infra/main
