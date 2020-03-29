@@ -1,14 +1,35 @@
-version: 2.1
-  jobs:
-    push_app:
-      docker:
-        - image: node:latest
-    push_infra:
-      docker:
-        - image: golang:1.12.10
+version: 2
+jobs:
+  build:
+    docker:
+      - image: node:latest
+    steps:
+      - checkout
+      - run: echo "build"
+  test:
+    docker:
+      - image: golang:latest
+    steps:
+      - checkout
+      - run: echo "test"
 workflows:
   version: 2
-  jobs:
+  build_and_test:
     jobs:
-      - push_app
-      - push_infra
+      - build
+      - test
+
+#       version: 2.0
+#   jobs:
+#     push_app:
+#       docker:
+#         - image: node:latest
+#     push_infra:
+#       docker:
+#         - image: golang:1.12.10
+# workflows:
+#   version: 2
+#   jobs:
+#     jobs:
+#       - push_app
+#       - push_infra
