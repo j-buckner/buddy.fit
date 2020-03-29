@@ -7,7 +7,6 @@ import (
 )
 
 func main() {
-	fmt.Println("test")
 	http.HandleFunc("/health", ping)
 	http.HandleFunc("/headers", headers)
 
