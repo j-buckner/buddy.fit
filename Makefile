@@ -8,7 +8,7 @@ start:
 	docker-compose up -d && cd ./app; yarn local
 
 deploy.app:
-	cd app; npm run build && gcloud app deploy app.yml
+	cd app; yarn build && gcloud app deploy app.yml
 
 deploy.infra:
 	cd infra; gcloud app deploy app.yml
