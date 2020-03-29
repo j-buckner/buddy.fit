@@ -24,6 +24,7 @@ jobs:
       - run: apt -y install yarn
       - run: curl -o- -L https://yarnpkg.com/install.sh | bash
       - checkout
+      - run: yarn install
       - run: make deploy.app
 workflows:
   version: 2
@@ -32,18 +33,3 @@ workflows:
       - build
       - test
       - deploy
-
-#       version: 2.0
-#   jobs:
-#     push_app:
-#       docker:
-#         - image: node:latest
-#     push_infra:
-#       docker:
-#         - image: golang:1.12.10
-# workflows:
-#   version: 2
-#   jobs:
-#     jobs:
-#       - push_app
-#       - push_infra
