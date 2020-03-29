@@ -2,3 +2,7 @@ steps:
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['app', 'deploy', 'app/app.yaml']
   timeout: '300s'
+
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['app', 'deploy', 'infra/app.yaml']
+  timeout: '300s'
