@@ -1,4 +1,5 @@
 runtime: nodejs12
-url: /
+handlers:
+- url: /
   static_files: build/index.html
   upload: build/index.html
