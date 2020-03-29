@@ -1,0 +1,7 @@
+version: 2.1
+  push_app:
+    docker:
+      - image: node:latest
+  push_infra:
+    docker:
+      - image: golang:1.12.10
