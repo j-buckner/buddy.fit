@@ -12,7 +12,7 @@ func main() {
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8090"
+		port = "8080"
 	}
 
 	http.ListenAndServe(fmt.Sprintf(":%v", port), nil)
