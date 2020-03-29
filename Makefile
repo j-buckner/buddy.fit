@@ -5,7 +5,7 @@ down:
 	docker-compose down
 
 start:
-	docker-compose up -d && cd ./app; yarn start
+	docker-compose up -d && cd ./app; yarn local
 
 deploy.app:
 	cd app; npm run build && gcloud app deploy app.yml
