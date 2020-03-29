@@ -5,10 +5,11 @@ import {
   Route
 } from "react-router-dom";
 import styled from 'styled-components';
-import Navigation from './Navigation';
-import Home from './Home';
-import Login from './Login';
-import NotFound from './NotFound';
+import Navigation from '../Components/Navigation';
+import Home from '../Containers/Home';
+import Login from '../Containers/Login';
+import SignUp from '../Containers/SignUp';
+import NotFound from '../Containers/NotFound';
 
 const AppContainer = styled.div`
   width: 100%;
@@ -36,6 +37,9 @@ const App = () => {
               </Route>
               <Route exact path="/login">
                 <Login />
+              </Route>
+              <Route exact path="/signup">
+                <SignUp />
               </Route>
               <Route path="*">
                 <NotFound />

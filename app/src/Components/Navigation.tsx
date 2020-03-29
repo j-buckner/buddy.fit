@@ -40,7 +40,7 @@ const Navigation = () => {
   }, [location]);
   return (
     <>
-      {currentPage !== '/login' ? 
+      {currentPage !== '/login' && currentPage !== '/signup' ? 
         <NavContainer>
           <NavMenu>
             <StyledLink to="/login">
