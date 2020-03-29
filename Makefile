@@ -11,4 +11,4 @@ deploy.app:
 	cd app; yarn build && gcloud app deploy app.yaml
 
 deploy.infra:
-	cd infra; gcloud app deploy app.yml
+	cd infra; gcloud app deploy app.yaml
