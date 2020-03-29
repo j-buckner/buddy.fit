@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { blue } from '@ant-design/colors';
-import WorkingOutSrc from './assets/working-out.svg';
+import WorkingOutSrc from '../assets/working-out.svg';
 
 const LoginContainer = styled.div`
   width: 1040px;
@@ -33,7 +33,7 @@ const LoginTitle = styled.h1`
 const LoginCard = styled.div`
   width: 400px;
   background: #fff;
-  padding: 48px 48px 0;
+  padding: 48px 48px 24px;
   border-radius: 4px;
   box-shadow: rgba(60, 66, 87, 0.12) 0px 7px 14px 0px, rgba(0, 0, 0, 0.12) 0px 3px 6px 0px;
   @media (max-width: 768px) {
@@ -93,7 +93,6 @@ const WorkingOutImg = styled.img`
   bottom: 0;
 `;
 
-
 const Login = () => {
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
@@ -101,9 +100,9 @@ const Login = () => {
   return (
     <LoginContainer>
       <LoginContent>
-          <LoginTitle>
-            <Link to="/">Buddy.Fit</Link>
-          </LoginTitle>
+        <LoginTitle>
+          <Link to="/">Buddy.Fit</Link>
+        </LoginTitle>
         <LoginCard>
           <StyledForm
             name="login"

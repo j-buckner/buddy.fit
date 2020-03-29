@@ -1,12 +1,13 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import { Button } from 'antd';
 import { blue } from '@ant-design/colors';
-import HealthyOptionsSrc from './assets/healthy-options.svg';
-import FemaleFitnessSrc from './assets/fitness-activity-tracker.svg';
-import StatsSrc from './assets/browser-stats.svg';
-import MaleRunnerSrc from './assets/fitness-stats.svg';
-import WorkingOutSrc from './assets/fitness-progress-tracking.svg';
+import HealthyOptionsSrc from '../assets/healthy-options.svg';
+import FemaleFitnessSrc from '../assets/fitness-activity-tracker.svg';
+import StatsSrc from '../assets/browser-stats.svg';
+import MaleRunnerSrc from '../assets/fitness-stats.svg';
+import WorkingOutSrc from '../assets/fitness-progress-tracking.svg';
 
 const HomeContainer = styled.div`
   width: 1040px;
@@ -121,7 +122,7 @@ const Home = () => {
             Your buddy designed to guide you on your fitness journey.
           </p>
           <Button ghost type="default" size="large">
-            Sign Up for Free
+            <Link to="/signup">Sign Up for Free</Link>
           </Button>
         </CardText>
         <MaleRunnerImg src={MaleRunnerSrc} />
