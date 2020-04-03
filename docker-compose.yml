@@ -4,3 +4,9 @@ services:
     build: ./infra
     ports:
       - "8080:8080"
+  db:
+    image: "postgres"
+    ports:
+         - 5432:5432
+    volumes:
+    - ./migrations/init.sql:/docker-entrypoint-initdb.d/init.sql
