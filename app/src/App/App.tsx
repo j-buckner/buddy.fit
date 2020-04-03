@@ -9,6 +9,7 @@ import Navigation from '../Components/Navigation';
 import Home from '../Containers/Home';
 import Login from '../Containers/Login';
 import SignUp from '../Containers/SignUp';
+import Dashboard from '../Containers/Dashboard';
 import NotFound from '../Containers/NotFound';
 
 const AppContainer = styled.div`
@@ -16,13 +17,13 @@ const AppContainer = styled.div`
   height: auto;
   position: relative;
   overflow: hidden;
+  min-height: 100vh;
 `;
 
 const Content = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  min-height: 100vh;
 `;
 
 const App = () => {
@@ -32,14 +33,17 @@ const App = () => {
         <Navigation />
           <Content>
             <Switch>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route exact path="/login">
+              <Route path="/login">
                 <Login />
               </Route>
-              <Route exact path="/signup">
+              <Route path="/signup">
                 <SignUp />
+              </Route>
+              <Route path="/dashboard">
+                <Dashboard />
+              </Route>
+              <Route exact path="/">
+                <Home />
               </Route>
               <Route path="*">
                 <NotFound />

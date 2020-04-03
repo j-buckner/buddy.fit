@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import styled from 'styled-components';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
@@ -94,8 +94,10 @@ const WorkingOutImg = styled.img`
 `;
 
 const Login = () => {
+  const history = useHistory();
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
+    history.push('/dashboard');
   };
   return (
     <LoginContainer>
@@ -136,7 +138,7 @@ const Login = () => {
             </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit" className="login-form-button">
-                Log in
+                Sign in
               </Button>
             </Form.Item>
           </StyledForm>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import { 
@@ -187,7 +187,7 @@ const SignUp = () => {
               ]}
             >
               <Checkbox>
-                I have read the <a href="">agreement</a>
+                I have read the <a href="/agreement" target="_blank">agreement</a>
               </Checkbox>
             </Form.Item>
             <Button type="primary" htmlType="submit" className="signup-form-button">
