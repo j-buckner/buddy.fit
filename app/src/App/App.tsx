@@ -9,7 +9,7 @@ import Navigation from '../Components/Navigation';
 import Home from '../Containers/Home';
 import Login from '../Containers/Login';
 import SignUp from '../Containers/SignUp';
-import Dashboard from '../Containers/Dashboard';
+import Dashboard from '../Containers/Dashboard/Dashboard';
 import NotFound from '../Containers/NotFound';
 
 const AppContainer = styled.div`

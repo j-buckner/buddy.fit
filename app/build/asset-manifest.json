@@ -1,32 +1,32 @@
 {
   "files": {
-    "main.css": "/static/css/main.0d4408e1.chunk.css",
-    "main.js": "/static/js/main.71bffdc7.chunk.js",
-    "main.js.map": "/static/js/main.71bffdc7.chunk.js.map",
+    "main.css": "/static/css/main.6479b0ac.chunk.css",
+    "main.js": "/static/js/main.c822dee4.chunk.js",
+    "main.js.map": "/static/js/main.c822dee4.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.6d8ceafa.js",
     "runtime-main.js.map": "/static/js/runtime-main.6d8ceafa.js.map",
     "static/css/2.7638c064.chunk.css": "/static/css/2.7638c064.chunk.css",
-    "static/js/2.3e8b3441.chunk.js": "/static/js/2.3e8b3441.chunk.js",
-    "static/js/2.3e8b3441.chunk.js.map": "/static/js/2.3e8b3441.chunk.js.map",
+    "static/js/2.ac86f95c.chunk.js": "/static/js/2.ac86f95c.chunk.js",
+    "static/js/2.ac86f95c.chunk.js.map": "/static/js/2.ac86f95c.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.504af601f96da2855cfa66dfa6cdc64e.js": "/precache-manifest.504af601f96da2855cfa66dfa6cdc64e.js",
+    "precache-manifest.2d189611e9a080782f016a939a5270a9.js": "/precache-manifest.2d189611e9a080782f016a939a5270a9.js",
     "service-worker.js": "/service-worker.js",
     "static/css/2.7638c064.chunk.css.map": "/static/css/2.7638c064.chunk.css.map",
-    "static/css/main.0d4408e1.chunk.css.map": "/static/css/main.0d4408e1.chunk.css.map",
-    "static/js/2.3e8b3441.chunk.js.LICENSE.txt": "/static/js/2.3e8b3441.chunk.js.LICENSE.txt",
+    "static/css/main.6479b0ac.chunk.css.map": "/static/css/main.6479b0ac.chunk.css.map",
+    "static/js/2.ac86f95c.chunk.js.LICENSE.txt": "/static/js/2.ac86f95c.chunk.js.LICENSE.txt",
     "static/media/browser-stats.svg": "/static/media/browser-stats.4c969967.svg",
-    "static/media/fitness-activity-tracker.svg": "/static/media/fitness-activity-tracker.9c0c9c52.svg",
-    "static/media/fitness-progress-tracking.svg": "/static/media/fitness-progress-tracking.1107bcc7.svg",
-    "static/media/fitness-stats.svg": "/static/media/fitness-stats.fffbb5c7.svg",
-    "static/media/healthy-habit.svg": "/static/media/healthy-habit.ce766326.svg",
+    "static/media/fitness-activity-tracker.svg": "/static/media/fitness-activity-tracker.71eda56f.svg",
+    "static/media/fitness-progress-tracking.svg": "/static/media/fitness-progress-tracking.6773e5c4.svg",
+    "static/media/fitness-stats.svg": "/static/media/fitness-stats.f2b1e97f.svg",
+    "static/media/healthy-habit.svg": "/static/media/healthy-habit.720c3de2.svg",
     "static/media/healthy-options.svg": "/static/media/healthy-options.3e78385e.svg",
-    "static/media/working-out.svg": "/static/media/working-out.e201689a.svg"
+    "static/media/working-out.svg": "/static/media/working-out.e77b0f4b.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.6d8ceafa.js",
     "static/css/2.7638c064.chunk.css",
-    "static/js/2.3e8b3441.chunk.js",
-    "static/css/main.0d4408e1.chunk.css",
-    "static/js/main.71bffdc7.chunk.js"
+    "static/js/2.ac86f95c.chunk.js",
+    "static/css/main.6479b0ac.chunk.css",
+    "static/js/main.c822dee4.chunk.js"
   ]
 }

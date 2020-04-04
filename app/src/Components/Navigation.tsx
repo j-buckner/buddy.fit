@@ -5,17 +5,30 @@ import {
 } from "react-router-dom";
 import { Avatar, Menu, Dropdown } from 'antd';
 import styled from 'styled-components';
+import { blue } from '@ant-design/colors';
 
 const NavContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 12px;
+  padding: 12px 0;
 `;
 
 const BrandLogo = styled.div`
   font-size: 24px;
   margin-right: auto;
+`;
+
+const BrandLink = styled(Link)`
+  color: #fff;
+  &:hover {
+    color: unset;
+  }
+`;
+
+const StyledAvatar = styled(Avatar)`
+  cursor: pointer;
+  box-shadow: 0 2px 5px 0 rgba(60,66,87, 0.12), 0 1px 1px 0 rgba(0,0,0, 0.12);
 `;
 
 const StyledLink = styled(Link)`
@@ -57,29 +70,20 @@ const Navigation = () => {
   useEffect(() => {
     setCurrentPage(location.pathname);
   }, [location]);
-
-  const [user, setUser] = useState(UserList[0]);
-  const [color, setColor] = useState(ColorList[0]);
-  // const changeUser = () => {
-  //   const index = UserList.indexOf(user);
-  //   setUser(index < UserList.length - 1 ? UserList[index + 1] : UserList[0]);
-  //   setColor(index < ColorList.length - 1 ? ColorList[index + 1] : ColorList[0]);
-  // };
-
   return (
     <>
       {currentPage !== '/login' && currentPage !== '/signup' ? 
-        <NavContainer>
+        <NavContainer style={{background: currentPage && currentPage.split('/')[1] === 'dashboard' ? `linear-gradient(150deg, ${blue[6]} 15%,${blue[5]} 70%,${blue[4]} 94%)` : 'transparent' }}>
           <NavMenu>
             {currentPage && currentPage.split('/')[1] === 'dashboard' ? 
             <>
-              <BrandLogo>Buddy.fit</BrandLogo>
+              <BrandLogo>
+                <BrandLink to="/">Buddy.fit</BrandLink>
+              </BrandLogo>
               <Dropdown overlay={userDropdown} trigger={['click']}>
-                <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-                  <Avatar style={{ backgroundColor: color, verticalAlign: 'middle' }} size="large">
-                    {user}
-                  </Avatar>
-                </a>
+                <StyledAvatar className="ant-dropdown-link" style={{ backgroundColor: ColorList[0], verticalAlign: 'middle' }} size="large">
+                  {UserList[0]}
+                </StyledAvatar>
               </Dropdown>
             </>
             : 
