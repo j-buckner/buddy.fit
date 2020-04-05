@@ -18,7 +18,7 @@ type Credentials struct {
 
 // DB returns a database connection
 func DB() {
-	fmt.Println("test")
+	fmt.Println("testing")
 	creds := getDBCredentials()
 
 	fmt.Println("Creds: ", creds)
