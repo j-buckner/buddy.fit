@@ -18,7 +18,7 @@ type Credentials struct {
 // DB returns a database connection
 func DB() {
 	fmt.Println("testing")
-	creds, _ := accessSecretVersion("projects/buddyfit/secrets/DB_USER/versions/latest")
+	creds, _ := accessSecretVersion("projects/1069444829621/secrets/DB_PASS/versions/latest")
 
 	fmt.Println("Creds: ", creds)
 }
@@ -47,7 +47,7 @@ func accessSecretVersion(name string) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("failed to access secret version: %v", err)
 	}
-
+	result.Payload.Data
 	// WARNING: Do not print the secret in a production environment - this snippet
 	// is showing how to access the secret material.
 	return string(result.Payload.Data), nil
