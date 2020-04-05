@@ -3,6 +3,8 @@ package authenticator
 import (
 	"encoding/json"
 	"net/http"
+
+	"github.com/j-buckner/buddy.fit/infra/db"
 )
 
 // Credentials represents user credentials required to log in
@@ -21,6 +23,5 @@ func Signin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// log.Info("Creds: ", creds)
-	// fmt.Println("DB: ", db.db())
+	db.DB()
 }
