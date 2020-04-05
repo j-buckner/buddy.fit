@@ -24,6 +24,6 @@ func Signin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	db := db.Getdb()
-	fmt.Println("DB conn: ", db)
+	db, err := db.Getdb()
+	fmt.Println("DB conn: ", db, err)
 }
