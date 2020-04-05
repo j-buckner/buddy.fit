@@ -47,7 +47,7 @@ func accessSecretVersion(name string) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("failed to access secret version: %v", err)
 	}
-	result.Payload.Data
+
 	// WARNING: Do not print the secret in a production environment - this snippet
 	// is showing how to access the secret material.
 	return string(result.Payload.Data), nil
