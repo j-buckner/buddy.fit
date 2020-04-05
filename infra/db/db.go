@@ -2,26 +2,65 @@ package db
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
+	"os"
 
 	secretmanager "cloud.google.com/go/secretmanager/apiv1"
+	_ "github.com/lib/pq" // postgres driver
 	secretmanagerpb "google.golang.org/genproto/googleapis/cloud/secretmanager/v1"
 )
 
-// Credentials represents database connection credentials
-type Credentials struct {
-	User       string
-	Pass       string
-	Connection string
+// DB represents a connectionto the database
+type DB struct {
+	conn *sql.DB
 }
 
-// DB returns a database connection
-func DB() {
-	fmt.Println("testing")
-	creds, err := accessSecretVersion("projects/buddyfit/secrets/DB_PASS/versions/latest")
+// getDB returns a database connection
+func Getdb() (DB, error) {
+	if os.Getenv("env") != "prod" {
+		var (
+			host     = "localhost"
+			user     = "postgres"
+			password = ""
+			dbname   = ""
+		)
+		port := 5432
+		psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
+			"password=%s dbname=%s sslmode=disable",
+			host, port, user, password, dbname)
 
-	fmt.Println("Err : ", err)
-	fmt.Println("Creds: ", creds)
+		db, err := sql.Open("postgres", psqlInfo)
+		if err != nil {
+			return DB{conn: nil}, err
+		}
+
+		err = db.Ping()
+		if err != nil {
+			return DB{conn: nil}, err
+		}
+
+		return DB{conn: db}, nil
+	}
+
+	conn, err := accessSecretVersion("projects/buddyfit/secrets/INSTANCE_CONNECTION_NAME/versions/latest")
+	if err != nil {
+		return DB{conn: nil}, err
+	}
+
+	user, err := accessSecretVersion("projects/buddyfit/secrets/DB_USER/versions/latest")
+	if err != nil {
+		return DB{conn: nil}, err
+	}
+
+	pass, err := accessSecretVersion("projects/buddyfit/secrets/DB_PASS/versions/latest")
+	if err != nil {
+		return DB{conn: nil}, err
+	}
+
+	db, err := initSocketConnectionPool(user, pass, conn)
+
+	return DB{conn: db}, err
 }
 
 // accessSecretVersion accesses the payload for the given secret version if one
@@ -48,38 +87,57 @@ func accessSecretVersion(name string) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("failed to access secret version: %v", err)
 	}
-	fmt.Println("Res: ", result)
-	fmt.Println("Payload: ", result.Payload)
-	fmt.Println("data: ", result.Payload.Data)
+
 	// WARNING: Do not print the secret in a production environment - this snippet
 	// is showing how to access the secret material.
 	return string(result.Payload.Data), nil
 }
 
-// func getDBCredentials() Credentials {
-// 	// GCP project in which to store secrets in Secret Manager.
-// 	projectID := "buddyfit"
+// initSocketConnectionPool initializes a Unix socket connection pool for
+// a Cloud SQL instance of MySQL.
+func initSocketConnectionPool(user string, pass string, conn string) (*sql.DB, error) {
+	// [START cloud_sql_mysql_databasesql_create_socket]
+	var (
+		dbUser                 = user
+		dbPwd                  = pass
+		instanceConnectionName = conn
+		dbName                 = ""
+	)
 
-// 	// Create the client.
-// 	ctx := context.Background()
-// 	client, err := secretmanager.NewClient(ctx)
-// 	if err != nil {
-// 		log.Fatalf("failed to setup client: %v", err)
-// 	}
+	var dbURI string
+	dbURI = fmt.Sprintf("%s:%s@unix(/cloudsql/%s)/%s", dbUser, dbPwd, instanceConnectionName, dbName)
 
-// 	secretKey := "DB_USER"
+	// dbPool is the pool of database connections.
+	dbPool, err := sql.Open("postgres", dbURI)
+	if err != nil {
+		return nil, fmt.Errorf("sql.Open: %v", err)
+	}
 
-// 	// Create the request to create the secret.
-// 	getSecretReq := &secretmanagerpb.AccessSecretVersionRequest{
-// 		Name: fmt.Sprintf("projects/%s/secrets/%s/versions/latest", projectID, secretKey),
-// 	}
+	// [START_EXCLUDE]
+	configureConnectionPool(dbPool)
+	// [END_EXCLUDE]
 
-// 	secret, err := client.GetSecret(ctx, getSecretVersionReq)
-// 	if err != nil {
-// 		log.Fatalf("failed to get secret: %v", err)
-// 	}
+	return dbPool, nil
+	// [END cloud_sql_mysql_databasesql_create_socket]
+}
 
-// 	fmt.Println("Got secret: ", secret.Name)
+// configureConnectionPool sets database connection pool properties.
+// For more information, see https://golang.org/pkg/database/sql
+func configureConnectionPool(dbPool *sql.DB) {
+	// [START cloud_sql_mysql_databasesql_limit]
 
-// 	return Credentials{}
-// }
+	// Set maximum number of connections in idle connection pool.
+	dbPool.SetMaxIdleConns(5)
+
+	// Set maximum number of open connections to the database.
+	dbPool.SetMaxOpenConns(7)
+
+	// [END cloud_sql_mysql_databasesql_limit]
+
+	// [START cloud_sql_mysql_databasesql_lifetime]
+
+	// Set Maximum time (in seconds) that a connection can remain open.
+	dbPool.SetConnMaxLifetime(1800)
+
+	// [END cloud_sql_mysql_databasesql_lifetime]
+}

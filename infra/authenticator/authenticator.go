@@ -2,6 +2,7 @@ package authenticator
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/j-buckner/buddy.fit/infra/db"
@@ -23,5 +24,6 @@ func Signin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	db.DB()
+	db := db.Getdb()
+	fmt.Println("DB conn: ", db)
 }

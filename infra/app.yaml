@@ -1,3 +1,5 @@
 service: infra
 runtime: go112
 main: ./cmd/
+env_variables:
+  env: "prod"
