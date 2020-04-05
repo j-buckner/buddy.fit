@@ -26,7 +26,7 @@ func DB() {
 
 func getDBCredentials() Credentials {
 	// GCP project in which to store secrets in Secret Manager.
-	projectID := "buddy.fit"
+	projectID := "buddyfit"
 
 	// Create the client.
 	ctx := context.Background()
