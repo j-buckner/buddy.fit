@@ -3,11 +3,15 @@ package authenticator
 import (
 	"database/sql"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
+	"strings"
+
+	"golang.org/x/crypto/bcrypt"
 )
 
-// Authenaticator represents an authenticator
+// Authenticator represents an authenticator
 type Authenticator struct {
 	DB *sql.DB
 }
@@ -18,7 +22,7 @@ type Credentials struct {
 	Email    string `json:"email"`
 }
 
-// Signin handles logging in users given credentials
+// Login handles logging in users given credentials
 func (auth Authenticator) Login(w http.ResponseWriter, r *http.Request) {
 	var creds Credentials
 	// Get the JSON body and decode into credentials
@@ -28,5 +32,26 @@ func (auth Authenticator) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println("Auth conn: ", auth.DB)
+	if creds.Email == "" || creds.Password == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	email := strings.ToLower(creds.Email)
+
+	var exists string
+	err = auth.DB.QueryRow("select id from users where email = ?", 1).Scan(&email)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+	}
+	fmt.Println(exists)
+}
+
+// Hashes the given plain-text password.
+func hashPassword(pass string) (string, error) {
+	passHash, err := bcrypt.GenerateFromPassword([]byte(pass), 0)
+	if err != nil {
+		return "", errors.New("hashed password cannot be an empty string")
+	}
+	return string(passHash), err
 }
