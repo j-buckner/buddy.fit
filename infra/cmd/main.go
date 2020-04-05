@@ -4,12 +4,14 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+
+	"github.com/j-buckner/buddy.fit/infra/authenticator"
 )
 
 func main() {
 	http.HandleFunc("/health", ping)
 	http.HandleFunc("/headers", headers)
-	// http.HandleFunc("/signin", Signin)
+	http.HandleFunc("/signin", authenticator.Signin)
 
 	port := os.Getenv("PORT")
 	if port == "" {

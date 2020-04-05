@@ -3,8 +3,6 @@ package authenticator
 import (
 	"encoding/json"
 	"net/http"
-
-	"github.com/segmentio/kit/log"
 )
 
 // Credentials represents user credentials required to log in
@@ -23,5 +21,6 @@ func Signin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	log.Info("Creds: ", creds)
+	// log.Info("Creds: ", creds)
+	// fmt.Println("DB: ", db.db())
 }
