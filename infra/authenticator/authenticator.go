@@ -1,12 +1,16 @@
 package authenticator
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"net/http"
-
-	"github.com/j-buckner/buddy.fit/infra/db"
 )
+
+// Authenaticator represents an authenticator
+type Authenticator struct {
+	DB *sql.DB
+}
 
 // Credentials represents user credentials required to log in
 type Credentials struct {
@@ -15,7 +19,7 @@ type Credentials struct {
 }
 
 // Signin handles logging in users given credentials
-func Signin(w http.ResponseWriter, r *http.Request) {
+func (auth Authenticator) Login(w http.ResponseWriter, r *http.Request) {
 	var creds Credentials
 	// Get the JSON body and decode into credentials
 	err := json.NewDecoder(r.Body).Decode(&creds)
@@ -24,6 +28,5 @@ func Signin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	db, err := db.Getdb()
-	fmt.Println("DB conn: ", db, err)
+	fmt.Println("Auth conn: ", auth.DB)
 }

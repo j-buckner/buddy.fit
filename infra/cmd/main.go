@@ -2,33 +2,35 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 
 	"github.com/j-buckner/buddy.fit/infra/authenticator"
+	"github.com/j-buckner/buddy.fit/infra/db"
 )
 
 func main() {
-	http.HandleFunc("/health", ping)
-	http.HandleFunc("/headers", headers)
-	http.HandleFunc("/signin", authenticator.Signin)
-
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
 	}
+
+	db, err := db.InitDB()
+	if err != nil {
+		log.Panic(err)
+	}
+
+	auth := authenticator.Authenticator{
+		DB: db,
+	}
+
+	http.HandleFunc("/health", ping)
+	http.HandleFunc("/login", auth.Login)
 
 	http.ListenAndServe(fmt.Sprintf(":%v", port), nil)
 }
 
 func ping(w http.ResponseWriter, req *http.Request) {
 	w.WriteHeader(200)
-}
-
-func headers(w http.ResponseWriter, req *http.Request) {
-	for name, headers := range req.Header {
-		for _, h := range headers {
-			fmt.Fprintf(w, "%v: %v\n", name, h)
-		}
-	}
 }

@@ -11,13 +11,8 @@ import (
 	secretmanagerpb "google.golang.org/genproto/googleapis/cloud/secretmanager/v1"
 )
 
-// DB represents a connectionto the database
-type DB struct {
-	conn *sql.DB
-}
-
-// getDB returns a database connection
-func Getdb() (DB, error) {
+// InitDB returns a database connection
+func InitDB() (*sql.DB, error) {
 	if os.Getenv("env") != "prod" {
 		var (
 			host     = "localhost"
@@ -32,35 +27,38 @@ func Getdb() (DB, error) {
 
 		db, err := sql.Open("postgres", psqlInfo)
 		if err != nil {
-			return DB{conn: nil}, err
+			return nil, err
 		}
 
 		err = db.Ping()
 		if err != nil {
-			return DB{conn: nil}, err
+			return nil, err
 		}
 
-		return DB{conn: db}, nil
+		return db, nil
 	}
 
 	conn, err := accessSecretVersion("projects/buddyfit/secrets/INSTANCE_CONNECTION_NAME/versions/latest")
 	if err != nil {
-		return DB{conn: nil}, err
+		return nil, err
 	}
 
 	user, err := accessSecretVersion("projects/buddyfit/secrets/DB_USER/versions/latest")
 	if err != nil {
-		return DB{conn: nil}, err
+		return nil, err
 	}
 
 	pass, err := accessSecretVersion("projects/buddyfit/secrets/DB_PASS/versions/latest")
 	if err != nil {
-		return DB{conn: nil}, err
+		return nil, err
 	}
 
 	db, err := initSocketConnectionPool(user, pass, conn)
+	if err != nil {
+		return nil, err
+	}
 
-	return DB{conn: db}, err
+	return db, nil
 }
 
 // accessSecretVersion accesses the payload for the given secret version if one
