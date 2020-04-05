@@ -18,9 +18,9 @@ type Credentials struct {
 // DB returns a database connection
 func DB() {
 	fmt.Println("testing")
-	creds, err := accessSecretVersion("projects/1069444829621/secrets/DB_PASS/versions/latest")
+	creds, err := accessSecretVersion("projects/buddyfit/secrets/DB_PASS/versions/latest")
 
-	fmt.Println("Err: ", err)
+	fmt.Println("Err : ", err)
 	fmt.Println("Creds: ", creds)
 }
 
