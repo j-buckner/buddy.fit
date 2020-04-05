@@ -50,7 +50,7 @@ func accessSecretVersion(name string) ([]byte, error) {
 
 	// WARNING: Do not print the secret in a production environment - this snippet
 	// is showing how to access the secret material.
-	return nil, result.Payload.Data
+	return result.Payload.Data, nil
 }
 
 // func getDBCredentials() Credentials {
