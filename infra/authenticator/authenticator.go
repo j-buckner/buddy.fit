@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -32,19 +31,32 @@ func (auth Authenticator) Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Neither fields can be empty
 	if creds.Email == "" || creds.Password == "" {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
 	email := strings.ToLower(creds.Email)
+	pass := creds.Password
 
-	var exists string
-	err = auth.DB.QueryRow("select id from users where email = ?", 1).Scan(&email)
+	var idFound int
+	var passFound string
+	err = auth.DB.QueryRow("select id, password from users where email = $1", email).Scan(&idFound, &passFound)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
+		return
 	}
-	fmt.Println(exists)
+
+	if idFound == 0 {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	if nil != bcrypt.CompareHashAndPassword([]byte(passFound), []byte(pass)) {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
 }
 
 // Hashes the given plain-text password.
