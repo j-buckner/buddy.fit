@@ -97,7 +97,7 @@ const Login = () => {
   const history = useHistory();
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
-    history.push('/dashboard');
+    history.push('/dashboard/food-diary');
   };
   return (
     <LoginContainer>

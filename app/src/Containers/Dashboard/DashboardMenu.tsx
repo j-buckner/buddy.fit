@@ -16,6 +16,7 @@ interface Props {
 }
 
 const Dashboard: FC<Props> = ({ url, current, setCurrent }) => {
+  // 
   const handleClick = (e: any) => {
     setCurrent(e.key)
   };
@@ -25,17 +26,11 @@ const Dashboard: FC<Props> = ({ url, current, setCurrent }) => {
       selectedKeys={[current]} 
       mode="horizontal"
     >
-      <Menu.Item key="home">
-        <Link to={`${url}/home`}>Home</Link>
-      </Menu.Item>
       <Menu.Item key="food-diary">
         <Link to={`${url}/food-diary`}>Food Diary</Link>
       </Menu.Item>
       <Menu.Item key="goals">
         <Link to={`${url}/goals`}>Goals</Link>
-      </Menu.Item>
-      <Menu.Item key="my-foods">
-        <Link to={`${url}/my-foods`}>My Foods</Link>
       </Menu.Item>
       <Menu.Item key="settings">
         <Link to={`${url}/settings`}>Settings</Link>

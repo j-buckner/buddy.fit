@@ -4,6 +4,7 @@ import {
   Route
 } from "react-router-dom";
 import styled from 'styled-components';
+import FoodDiary from '../FoodDiary/FoodDiary';
 
 const DashboardContentWrapper = styled.div`
   display: flex;
@@ -48,17 +49,11 @@ const Dashboard: FC<Props> = ({ path }) => (
   <DashboardContentWrapper>
     <DashboardContent>
       <Switch>
-        <Route path={`${path}/home`}>
-          <Card><h1>Home</h1></Card>
-        </Route>
         <Route path={`${path}/food-diary`}>
-          <Card><h1>Food Diary</h1></Card>
+          <FoodDiary />
         </Route>
         <Route path={`${path}/goals`}>
           <Card><h1>Goals</h1></Card>
-        </Route>
-        <Route path={`${path}/my-foods`}>
-          <Card><h1>My Foods</h1></Card>
         </Route>
         <Route path={`${path}/settings`}>
           <Card><h1>Settings</h1></Card>
