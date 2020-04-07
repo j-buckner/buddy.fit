@@ -33,7 +33,7 @@ const DatePickerWrapper = styled.div`
 `;
 
 const StyledDatePicker = styled(DatePicker)`
-  margin: 0 6px;
+  margin: 0 12px;
 `;
 
 const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
@@ -116,6 +116,32 @@ const initialMeals: any = {
       fat: 0,
       protein: 1
     }
+  ],
+  snacks: [
+    {
+      key: '1',
+      name: 'Members Mark - Olive Oil, 1 T',
+      calories: 120,
+      carbs: 0,
+      fat: 14,
+      protein: 0
+    },
+    {
+      key: '2',
+      name: 'Oikos Triple Zero 5.3 oz - Vanilla Yogurt, 150 g',
+      calories: 120,
+      carbs: 14,
+      fat: 0,
+      protein: 15
+    },
+    {
+      key: '3',
+      name: 'Chiquita. - Banana, 94.5 g',
+      calories: 83,
+      carbs: 23,
+      fat: 0,
+      protein: 1
+    }
   ]
 };
 
@@ -142,7 +168,7 @@ const FoodDiary = () => {
           size="large"
           icon={<LeftOutlined />}
           onClick={() => setSelectedDate(moment(selectedDate, dateFormatList[0]).subtract(1, 'days'))}
-        ></Button>
+        />
         <StyledDatePicker 
           size="large"
           format={dateFormatList} 
@@ -154,8 +180,9 @@ const FoodDiary = () => {
           size="large"
           icon={<RightOutlined />}
           onClick={() => setSelectedDate(moment(selectedDate, dateFormatList[0]).add(1, 'days'))}
-        ></Button>
+        />
       </DatePickerWrapper>
+      {/* <TotalRemaining */}
       {Object.keys(meals).map((meal) => 
         <FoodDiaryTable 
           key={meal}

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Media from "react-media";
-import { CloseOutlined } from '@ant-design/icons';
-import { Table, Button, Modal, Input } from 'antd';
+import { CloseOutlined, PlusOutlined } from '@ant-design/icons';
+import { Table, Button, Modal, Input, Empty } from 'antd';
 import { blue } from '@ant-design/colors';
+import breakfastSrc from '../../assets/breakfast.svg';
 
 const TableWrapper = styled.div`
   margin: 16px 0;
@@ -36,6 +37,10 @@ const StyledModal = styled(Modal)`
   .ant-modal-title {
     width: 100%;
   }
+`;
+
+const ModalTitle = styled.div`
+  display: flex;
 `;
 
 const db = [
@@ -81,21 +86,18 @@ const FoodDiaryTable: React.FC<Props> = ({
   data, 
   handleDelete 
 }) => {
-  const [modalContent, setModalContent] = useState('Modal Content');
   const [modalVisibility, setModalVisibility] = useState(false);
   const [modalLoading, setModalLoading] = useState(false);
-  const [modalSearchResults, setModalSearchResults] = useState<any>([]);
+  const [modalSearchResults, setModalSearchResults] = useState<any>(null);
   const { Search } = Input;
   const handleShowModal = () => {
     setModalVisibility(true);
   };
   const handleModalOk = () => {
-    setModalContent('The modal will be closed after two seconds');
     setModalLoading(true);
     setTimeout(() => {
       setModalVisibility(false);
       setModalLoading(false);
-      setModalContent('Modal Content');
     }, 2000);
   };
   const handleModalCancel = () => {
@@ -185,11 +187,19 @@ const FoodDiaryTable: React.FC<Props> = ({
       </StyledButton>
       <StyledModal 
         title={
-          <Search
-            placeholder="Search for a food"
-            onSearch={value => handleModalSearch(value)}
-            size="large"
-          />
+          <ModalTitle>
+            <Search
+              placeholder="Search for a food"
+              onSearch={value => handleModalSearch(value)}
+              size="large"
+            />
+            <Button 
+              type="primary" 
+              icon={<PlusOutlined />} 
+              style={{marginLeft: '12px'}} 
+              size="large" 
+            />
+          </ModalTitle>
         }
         closable={false}
         visible={modalVisibility}
@@ -198,7 +208,24 @@ const FoodDiaryTable: React.FC<Props> = ({
         onCancel={handleModalCancel}
         centered
       >
-        {modalSearchResults ? modalSearchResults.map((result: any) => <div>{result}</div>) : modalContent}
+        {modalSearchResults && modalSearchResults.length !== 0 ? 
+          modalSearchResults.map((result: any, index: number) => <div key={`search-result${index}`}>{result}</div>) 
+        :  
+          <Empty
+            image={breakfastSrc}
+            imageStyle={{ height: 60 }}
+            description={
+              <>
+                <div>
+                  We can't find what you're looking for.
+                </div>
+                <div>
+                  Tap the <PlusOutlined style={{fontSize: '10px'}} /> to create your own food.
+                </div>
+              </>
+            }
+          />
+        }
       </StyledModal>
     </TableWrapper>
   )
