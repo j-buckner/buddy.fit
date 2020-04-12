@@ -1,10 +1,11 @@
 import React from 'react';
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from 'styled-components';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { blue } from '@ant-design/colors';
 import WorkingOutSrc from '../assets/working-out.svg';
+import useFetch from 'use-http';
 
 const LoginContainer = styled.div`
   width: 1040px;
@@ -94,13 +95,18 @@ const WorkingOutImg = styled.img`
 `;
 
 const Login = () => {
-  const history = useHistory();
-  const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
-    history.push('/dashboard/food-diary');
-  };
+  const [request, response] = useFetch('http://localhost:8080', { 
+    mode: 'no-cors'
+  });
+  const handleLogin = async ({ email, password }: any) => {
+    const login = await request.post('/login', { email, password });
+    if (response.ok) {
+      console.log(login)
+    };
+  }
   return (
     <LoginContainer>
+      {request.loading && <div style={{color: 'black', textAlign: 'center', fontSize: '48px'}}>Loading...</div>}
       <LoginContent>
         <LoginTitle>
           <Link to="/">Buddy.Fit</Link>
@@ -110,7 +116,7 @@ const Login = () => {
             name="login"
             className="login-form"
             initialValues={{ remember: true }}
-            onFinish={onFinish}
+            onFinish={handleLogin}
             size="large"
           >
             <FormTitle>Sign in to your account</FormTitle>

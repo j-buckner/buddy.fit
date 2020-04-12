@@ -15,10 +15,10 @@ import (
 func InitDB() (*sql.DB, error) {
 	if os.Getenv("env") != "prod" {
 		var (
-			host     = "localhost"
+			host     = "db"
 			user     = "postgres"
-			password = ""
-			dbname   = ""
+			password = "password"
+			dbname   = "db"
 		)
 		port := 5432
 		psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { DatePicker, Button } from 'antd';
-import { RightOutlined, LeftOutlined } from '@ant-design/icons';
 import moment from 'moment';
+import DatePicker from '../../Components/DatePicker';
 import FoodDiaryTable from './FoodDiaryTable';
+import CaloriesGoal from './CaloriesGoal';
 
 const Card = styled.div`
   width: 100%;
@@ -25,15 +25,11 @@ const Card = styled.div`
   }
 `;
 
-const DatePickerWrapper = styled.div`
+const FoodDiaryHeader = styled.div`
   display: flex;
-  align-items: center;
-  padding: 12px;
-  margin: 0 0 12px;
-`;
-
-const StyledDatePicker = styled(DatePicker)`
-  margin: 0 12px;
+  margin-bottom: 12px;
+  justify-content: space-between;
+  width: 100%;
 `;
 
 const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
@@ -149,40 +145,21 @@ const FoodDiary = () => {
   const [selectedDate, setSelectedDate] = useState(moment(new Date(), dateFormatList[0]));
   const [meals, setMeals] = useState(initialMeals);
   useEffect(() => { 
-    // make api call for user's list of tracked items for intial date on mount here
+    // make api call for user's list of tracked items for intial date on mount & as selectedDate updates
     console.log(moment(selectedDate).format(dateFormatList[0]));
   }, [selectedDate]);
-  const handleDatePick = (e: any) => {
-    if (e !== null) {
-      setSelectedDate(moment(e._d, dateFormatList[0]));
-    }
-  }
   const handleDelete = (meal: string, key: any) => {
     console.log('delete: ', meal, key);
   }
   return (
     <Card>
-      <DatePickerWrapper>
-        <Button 
-          type="primary" 
-          size="large"
-          icon={<LeftOutlined />}
-          onClick={() => setSelectedDate(moment(selectedDate, dateFormatList[0]).subtract(1, 'days'))}
+      <FoodDiaryHeader>
+        <DatePicker 
+          selectedDate={selectedDate} 
+          setSelectedDate={setSelectedDate} 
         />
-        <StyledDatePicker 
-          size="large"
-          format={dateFormatList} 
-          onChange={handleDatePick}
-          value={selectedDate}
-        />
-        <Button 
-          type="primary" 
-          size="large"
-          icon={<RightOutlined />}
-          onClick={() => setSelectedDate(moment(selectedDate, dateFormatList[0]).add(1, 'days'))}
-        />
-      </DatePickerWrapper>
-      {/* <TotalRemaining */}
+        <CaloriesGoal />
+      </FoodDiaryHeader>
       {Object.keys(meals).map((meal) => 
         <FoodDiaryTable 
           key={meal}
