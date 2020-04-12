@@ -21,8 +21,11 @@ func main() {
 		log.Panic(err)
 	}
 
+	// Override for prod
+	jwtKey := []byte("localJWTKey")
 	auth := authenticator.Authenticator{
-		DB: db,
+		DB:     db,
+		JWTKey: jwtKey,
 	}
 
 	http.HandleFunc("/health", ping)
