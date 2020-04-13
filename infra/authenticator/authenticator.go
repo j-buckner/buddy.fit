@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"net/http"
 	"strings"
 	"time"
@@ -118,18 +117,15 @@ func (auth Authenticator) handleSignup(email string, password string) error {
 	if idFound != 0 {
 		return errors.New("User or password is invalid, or email already exists")
 	}
-	fmt.Println("2")
 	passHash, err := hashPassword(password)
 	if err != nil {
 		return errors.New("User or password is invalid, or email already exists")
 	}
-	fmt.Println("3")
 	user := db.User{
 		Email:    email,
 		Password: passHash,
 		Nickname: email,
 	}
-	fmt.Println("4")
 	err = user.Create(auth.DB)
 	if err != nil {
 		return errors.New("User or password is invalid, or email already exists")
