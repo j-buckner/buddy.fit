@@ -9,6 +9,7 @@ import {
 } from 'antd';
 import { blue } from '@ant-design/colors';
 import WorkingOutSrc from '../assets/healthy-habit.svg';
+import useFetch from 'use-http';
 
 const SignUpContainer = styled.div`
   width: 1040px;
@@ -101,8 +102,14 @@ const WorkingOutImg = styled.img`
 const SignUp = () => {
   const [form] = Form.useForm();
 
-  const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
+  const [request, response] = useFetch('http://localhost:8080');
+
+  const onFinish = async ({ email, password }: any) => {
+    const res = await request.post('/signup', { email, password });
+    if (response.status === 200) {
+      console.log(response);
+      // history.push('/dashboard');
+    };
   };
 
   return (
