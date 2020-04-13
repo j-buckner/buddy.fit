@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import styled from 'styled-components';
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
@@ -95,13 +95,12 @@ const WorkingOutImg = styled.img`
 `;
 
 const Login = () => {
-  const [request, response] = useFetch('http://localhost:8080', { 
-    mode: 'no-cors'
-  });
+  const history = useHistory();
+  const [request, response] = useFetch('http://localhost:8080');
   const handleLogin = async ({ email, password }: any) => {
-    const login = await request.post('/login', { email, password });
-    if (response.ok) {
-      console.log(login)
+    const res = await request.post('/login', { email, password });
+    if (response.status === 200) {
+      history.push('/dashboard');
     };
   }
   return (

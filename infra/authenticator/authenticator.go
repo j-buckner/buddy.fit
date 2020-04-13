@@ -34,6 +34,14 @@ type Claims struct {
 
 // Login represents our authentication http endopint that handles logging in users given credentials in a request
 func (auth Authenticator) Login(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+
 	var creds Credentials
 	// Get the JSON body and decode into credentials
 	err := json.NewDecoder(r.Body).Decode(&creds)
@@ -65,6 +73,7 @@ func (auth Authenticator) Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	http.SetCookie(w, &tokenCookie)
+	w.WriteHeader(http.StatusOK)
 }
 
 func (auth Authenticator) handleLogin(email string, pass string) error {

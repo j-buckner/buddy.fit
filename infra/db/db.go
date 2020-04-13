@@ -13,7 +13,6 @@ import (
 
 // InitDB returns a database connection
 func InitDB() (*sql.DB, error) {
-	fmt.Println("Initing")
 	if os.Getenv("env") != "prod" {
 		var (
 			host     = "db"
