@@ -13,6 +13,7 @@ services:
          - 5432:5432
     volumes:
     - ./migrations/init.sql:/docker-entrypoint-initdb.d/init.sql
+    - ./migrations/branded_food.csv:/var/lib/postgresql/branded_food.csv
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
