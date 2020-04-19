@@ -34,7 +34,7 @@ func main() {
 	http.HandleFunc("/health", ping)
 	http.HandleFunc("/login", auth.Login)
 	http.HandleFunc("/signup", auth.Signup)
-	http.HandleFunc("/search", food.Search)
+	http.HandleFunc("/food/search", food.Search)
 
 	http.ListenAndServe(fmt.Sprintf(":%v", port), nil)
 }

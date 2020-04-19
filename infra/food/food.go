@@ -23,6 +23,14 @@ type SearchResult struct {
 }
 
 func (food Food) Search(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+
+	if r.Method == "OPTIONS" {
+		return
+	}
+
 	var searchReq SearchRequest
 
 	err := json.NewDecoder(r.Body).Decode(&searchReq)
