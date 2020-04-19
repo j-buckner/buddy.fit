@@ -4,7 +4,7 @@ go 1.12
 
 require (
 	cloud.google.com/go v0.56.0
-	github.com/DATA-DOG/go-sqlmock v1.4.1
+	github.com/DATA-DOG/go-sqlmock v1.4.1 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/lib/pq v1.3.0
 	github.com/stretchr/testify v1.4.0

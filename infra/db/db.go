@@ -15,7 +15,7 @@ import (
 func InitDB() (*sql.DB, error) {
 	if os.Getenv("env") != "prod" {
 		var (
-			host     = "db"
+			host     = "localhost"
 			user     = "postgres"
 			password = "password"
 			dbname   = "db"

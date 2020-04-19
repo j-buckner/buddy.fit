@@ -8,6 +8,7 @@ import (
 
 	"github.com/j-buckner/buddy.fit/infra/authenticator"
 	"github.com/j-buckner/buddy.fit/infra/db"
+	"github.com/j-buckner/buddy.fit/infra/food"
 )
 
 func main() {
@@ -16,7 +17,7 @@ func main() {
 		port = "8080"
 	}
 
-	db, err := db.InitDB()
+	dbConn, err := db.InitDB()
 	if err != nil {
 		log.Panic(err)
 	}
@@ -24,13 +25,16 @@ func main() {
 	// Override for prod
 	jwtKey := []byte("localJWTKey")
 	auth := authenticator.Authenticator{
-		DB:     db,
+		DB:     dbConn,
 		JWTKey: jwtKey,
 	}
+
+	food := food.Food{DB: dbConn}
 
 	http.HandleFunc("/health", ping)
 	http.HandleFunc("/login", auth.Login)
 	http.HandleFunc("/signup", auth.Signup)
+	http.HandleFunc("/search", food.Search)
 
 	http.ListenAndServe(fmt.Sprintf(":%v", port), nil)
 }
